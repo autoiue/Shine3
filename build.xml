@@ -55,7 +55,6 @@
         </exec>
          <exec executable="git" outputproperty="project.version">
             <arg value="describe"/>
-            <arg value="--long"/>
             <arg value="--tags"/>
             <arg value="--dirty"/>
             <arg value="--always"/>
