@@ -1,0 +1,81 @@
+<project name="Shine3" basedir="." default="run">
+
+    <property name="lib.dir"     value="libs" />
+    <property name="src.dir"     value="java" />
+    <property name="scripts.dir" value="javascript" />
+    <property name="build.dir"   value="build" />
+    <property name="classes.dir" value="${build.dir}/classes" />
+    <property name="jar.dir"     value="dist" />
+    <property name="main-class"  value="procsynth.shine3.Shine3" />
+
+
+    <fileset id="library.directory" dir="${lib.dir}">
+        <include name="**/*" />
+    </fileset>
+
+    <path id="build.classpath">
+        <fileset refid="library.directory" />
+    </path>
+
+    <pathconvert property="manifest.classpath" pathsep=" ">
+        <path refid="build.classpath"/>
+        <mapper>
+            <chainedmapper>
+                <flattenmapper />
+                <globmapper from="*.jar" to="${lib.dir}/*.jar"/>
+            </chainedmapper>
+        </mapper>
+    </pathconvert>
+
+    <target name="build" depends="clean, compile, jar" />
+
+    <target name="clean">
+        <delete dir="${build.dir}" />
+    </target>
+
+    <target name="compile">
+        <mkdir dir="${classes.dir}" />
+        <javac srcdir="${src.dir}"
+               destdir="${classes.dir}"
+               debug="true"
+               classpathref="build.classpath"
+               includeantruntime="false">
+        </javac>
+    </target>
+
+    <target name="jar">
+        <mkdir dir="${jar.dir}" />
+        <exec executable="ls" output="{scripts.dir}/filters.list">
+            <arg value="-1"/>
+            <arg value="{scripts.dir}/filters"/>
+        </exec>
+        <exec executable="ls" output="{scripts.dir}/blocks.list">
+            <arg value="-1"/>
+            <arg value="{scripts.dir}/blocks"/>
+        </exec>
+        <!-- git describe --long --tags --dirty --always -->
+         <exec executable="git" outputproperty="project.version">
+            <arg value="describe"/>
+            <arg value="--long"/>
+            <arg value="--tags"/>
+            <arg value="--dirty"/>
+            <arg value="--always"/>
+        </exec>
+        <jar destfile="${jar.dir}/${ant.project.name}_{project.version}.jar" basedir="${classes.dir}">
+            <fileset dir="." includes="{data.dir}/**" />
+            <fileset dir="." includes="{scripts.dir}/**/*" />
+            <zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
+            <manifest>
+                <attribute name="Main-Class" value="${main-class}" />
+                <attribute name="Class-Path" value="${manifest.classpath}" />
+                <attribute name="Specification-Version" value="${project.version}"/>
+            </manifest>
+        </jar>
+    </target>
+
+    <target name="run" depends="build">
+        <java jar="${jar.dir}/${ant.project.name}_{project.version}.jar" fork="true" >
+        </java>
+    </target>
+
+</project>
