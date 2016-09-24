@@ -1,0 +1,10 @@
+# Ant
+/build/
+/dist/
+
+# mashine
+*.mashine
+
+# sublime
+*.sublime-*
+

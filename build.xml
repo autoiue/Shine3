@@ -45,15 +45,14 @@
 
     <target name="jar">
         <mkdir dir="${jar.dir}" />
-        <exec executable="ls" output="{scripts.dir}/filters.list">
+        <exec executable="ls" output="${scripts.dir}/filters.list">
             <arg value="-1"/>
-            <arg value="{scripts.dir}/filters"/>
+            <arg value="${scripts.dir}/filters"/>
         </exec>
-        <exec executable="ls" output="{scripts.dir}/blocks.list">
+        <exec executable="ls" output="${scripts.dir}/blocks.list">
             <arg value="-1"/>
-            <arg value="{scripts.dir}/blocks"/>
+            <arg value="${scripts.dir}/blocks"/>
         </exec>
-        <!-- git describe --long --tags --dirty --always -->
          <exec executable="git" outputproperty="project.version">
             <arg value="describe"/>
             <arg value="--long"/>
@@ -61,9 +60,9 @@
             <arg value="--dirty"/>
             <arg value="--always"/>
         </exec>
-        <jar destfile="${jar.dir}/${ant.project.name}_{project.version}.jar" basedir="${classes.dir}">
-            <fileset dir="." includes="{data.dir}/**" />
-            <fileset dir="." includes="{scripts.dir}/**/*" />
+        <jar destfile="${jar.dir}/${ant.project.name}_${project.version}.jar" basedir="${classes.dir}">
+            <fileset dir="." includes="${data.dir}/**" />
+            <fileset dir="." includes="${scripts.dir}/**/*" />
             <zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
             <manifest>
                 <attribute name="Main-Class" value="${main-class}" />
@@ -74,7 +73,7 @@
     </target>
 
     <target name="run" depends="build">
-        <java jar="${jar.dir}/${ant.project.name}_{project.version}.jar" fork="true" >
+        <java jar="${jar.dir}/${ant.project.name}_${project.version}.jar" fork="true" >
         </java>
     </target>
 
