@@ -1,6 +1,7 @@
 <project name="Shine3" basedir="." default="run">
 
     <property name="lib.dir"     value="libs" />
+    <property name="doc.dir"     value="doc" />
     <property name="src.dir"     value="java" />
     <property name="scripts.dir" value="javascript" />
     <property name="build.dir"   value="build" />
@@ -26,6 +27,16 @@
             </chainedmapper>
         </mapper>
     </pathconvert>
+
+    <target name="doc" description="generate documentation">
+        <javadoc 
+            sourcepath="${src.dir}" 
+            destdir="${doc.dir}"
+            author="true"
+            version="true"
+            use="true"
+            access="private"/>
+    </target>
 
     <target name="build" depends="clean, compile, jar" />
 
