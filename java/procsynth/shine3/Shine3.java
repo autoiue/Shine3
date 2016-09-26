@@ -8,9 +8,9 @@ import java.util.jar.Manifest;
 import java.util.jar.Attributes;
 import java.io.IOException;
 
-import procsynth.shine3.engine.BlockEngine;
-import procsynth.shine3.world.World;
-import procsynth.shine3.papplet.EngineInterface;
+import procsynth.shine3.engine.*;
+import procsynth.shine3.world.*;
+import procsynth.shine3.papplet.*;
 
 /**
  * Main class for Shine3
@@ -28,7 +28,7 @@ public class Shine3{
 	public static String VERSION = "unknow";
 
 	/**
-	* Holds the main application objects to be quickly retrieved by blocks.
+	* Main application objects used by blocks.
 	*
 	* @see Block
 	*/
@@ -38,6 +38,8 @@ public class Shine3{
 
 	/**
 	* Initialize the main object.
+	*
+	* @param args the command line arguments passed at `java`
 	*
 	* @see #Shine3
 	*/

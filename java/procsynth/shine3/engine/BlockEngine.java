@@ -6,7 +6,7 @@ package procsynth.shine3.engine;
  *  
  *
  *	@author procsynth - Antoine Pintout
- *	@since  24-09-2016`
+ *	@since  v0.0.1
  */
 public class BlockEngine{
 	public BlockEngine(){	

@@ -8,7 +8,9 @@ import processing.core.*;
 import processing.event.*;
 
 /**
- *  PApplet graphic interface for Shine3 engine
+ *  PApplet graphic interface for Shine3 engine.
+ *  The EngineInterface is a Processing sketch that render the state of an engine and its blocks.
+ *  It is also used to interact with it using the mouse and keyboard. 
  *
  *	@author procsynth - Antoine Pintout
  *	@since  v0.0.1
