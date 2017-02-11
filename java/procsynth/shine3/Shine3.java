@@ -77,7 +77,7 @@ public class Shine3{
 	
 	/**
 	*	Retrieves the version string from the manifest.
-	* 	The version string describe the state of the git repository.
+	* 	The version string reflect the state of the git repository.
 	*	It is obtained by the command <code>git describe --tags --dirty --always</code>
 	*
 	* 	@return the version string
