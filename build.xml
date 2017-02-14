@@ -2,6 +2,7 @@
 
     <property name="lib.dir"     value="libs" />
     <property name="doc.dir"     value="doc" />
+    <property name="data.dir"     value="data" />
     <property name="src.dir"     value="java" />
     <property name="scripts.dir" value="javascript" />
     <property name="build.dir"   value="build" />
@@ -32,9 +33,11 @@
         <javadoc 
             sourcepath="${src.dir}" 
             destdir="${doc.dir}"
+            classpathref="build.classpath"
             author="true"
             version="true"
             use="true"
+            stylesheetfile="${data.dir}/custom-javadoc.css"
             access="private"/>
     </target>
 
@@ -82,7 +85,7 @@
         </jar>
     </target>
 
-    <target name="run" depends="build">
+    <target name="run" depends="doc, build">
         <java jar="${jar.dir}/${ant.project.name}_${project.version}.jar" fork="true" >
         </java>
     </target>

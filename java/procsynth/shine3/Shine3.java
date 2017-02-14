@@ -7,9 +7,14 @@ import java.net.URL;
 import java.util.jar.Manifest;
 import java.util.jar.Attributes;
 import java.io.IOException;
+import java.lang.reflect.Modifier;
+
+
+import java.util.*;
+
+import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
 import procsynth.shine3.engine.*;
-import procsynth.shine3.world.*;
 import procsynth.shine3.papplet.*;
 
 /**
@@ -34,7 +39,7 @@ public class Shine3{
 	*/
 	public static Shine3 S3;
 	public static BlockEngine engine;
-	public static World world;
+	public static EngineInterface papplet;
 
 	/**
 	* Initialize the main object.
@@ -44,34 +49,28 @@ public class Shine3{
 	* @see #Shine3
 	*/
 	public static void main(String[] args) {
-
 		S3 = new Shine3();
-		
 	}
 
 	/**
 	*	Initialize the application objects.
 	* 	Shine3 is composed by three main parts :
-	* 	The {@link BlockEngine} is the heart of Shine3, it is composed by multiple {@link Block} objects with inputs and outputs that we can wire the way we want. The specific blocks used in Shine3 are in the package <code>procsynth.shine3.shine</code> it is fed in the engine after the instanciation using {@link BlockEngine#feed}.
+	* 	The {@link BlockEngine} is the heart of Shine3, it is composed by multiple {@link Block} objects with inputs and outputs that we can wire the way we want. 
+	*	The specific blocks used in Shine3 are in the package <code>procsynth.shine3.shine</code> it is fed in the engine after the instanciation using usig autodiscoveryb.
 	* 	The {@link EngineInterface} is a GUI powered by Processing which manipulates the state of the BlockEngine and the blocks.
-	* 	{@link World} manage a description of states of the real world. It is manipulated by the Block objects described in the package <code>procsynth.shine3.shine</code>.
 	*
 	*	@see BlockEngine
-	* 	@see BlockEngine#feed
 	* 	@see Block
-	*	@see World
 	*	@see EngineInterface
 	*/
 	private Shine3(){
 		VERSION = getVersion();
 		System.out.println("Shine3 "+ VERSION +" / procsynth");
-		
 
 		engine = new BlockEngine();
-		world = new World();
-		engine.feed("procsynth.shine3.shine");
-		
-		new EngineInterface(engine);
+		papplet = new EngineInterface(engine);
+
+		getAvailableBlocks();
 	}
 
 	
@@ -79,6 +78,8 @@ public class Shine3{
 	*	Retrieves the version string from the manifest.
 	* 	The version string reflect the state of the git repository.
 	*	It is obtained by the command <code>git describe --tags --dirty --always</code>
+	*   <br>
+	*	See build.xml file
 	*
 	* 	@return the version string
 	*/
@@ -94,5 +95,23 @@ public class Shine3{
 			version = attr.getValue("Specification-Version");
 		} catch (IOException E) {}
 		return version;
+	}
+
+	/**
+	*	Scan the classpath to find all subclasses of superclass {@link Block}.
+	*
+	*/
+	private void getAvailableBlocks(){
+		List<Class<? extends Block>> blockSubclasses = new ArrayList<>();
+
+		new FastClasspathScanner(/*Block.class.getPackage().getName(), ""*/)
+		.matchSubclassesOf(Block.class, blockSubclasses::add)
+		.scan();
+
+		for(Class<? extends Block> b : blockSubclasses){
+			System.out.println(b.getName()+
+			                   (Modifier.isFinal(b.getModifiers()) ? " [final]" : "")
+			                   );
+		}
 	}
 }

@@ -11,8 +11,5 @@ package procsynth.shine3.engine;
 public class BlockEngine{
 	public BlockEngine(){	
 	}
-
-	public void feed(String blockPackage){
-	}
 }
 

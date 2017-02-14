@@ -1,6 +1,6 @@
 // World.java
 
-package procsynth.shine3.world;
+package procsynth.shine3.shine.world;
 
 /**
  * Holds real world description
