@@ -7,9 +7,8 @@
 
 - `java/procsynth/shine3` This is where the java code is. It furthermore subdivided :
 	- `engine` is the block engine, it is written with re-usability in mind, it does not depend of an external lib.
-	- `world` is where tools to define the real world lies.
-	- `interface` is a processing applet that render the state of the engine (and the world ? (preferably no))
-	- `shine` is where are defined the blocks to manipulate the __world__ using the __engine__.
+	- `interface` is a processing applet that render the state of the engine, the block interfaces and other interfaces
+	- `shine` is where are defined the specific blocks, blockfactory, interfaces that permit the manipulation of DMX, sequences, ...  
 - `javascript` Third party scripts or application scripts goes here.
 
 ## 
