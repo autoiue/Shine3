@@ -6,6 +6,7 @@ import procsynth.shine3.engine.*;
 import procsynth.shine3.*;
 
 import processing.core.*;
+import processing.opengl.*;
 import processing.event.*;
 
 /**
@@ -28,6 +29,10 @@ public class EngineInterface extends PApplet{
 	*/
 	private BlockEngine engine;
 
+	/**
+	*	OPenGL like unproject
+	*/
+	Unproject u = new Unproject();
 
 	/**
 	*	This creates a PApplet sketch that will render a representation of the BlockEngine.
@@ -60,25 +65,27 @@ public class EngineInterface extends PApplet{
 		frameRate(160);
 		surface.setResizable(true);
 		hint(PApplet.DISABLE_DEPTH_TEST);
+
+	}
+
+	/**
+	* 	Register a view that will be made available in the interface
+	*
+	*	@see View
+	*
+	*	@param v The view to register
+	*/
+	public void registerView(View v) {
+
 	}
 
 	/**
 	* 	Main loop for the PApplet.
 	*/
-	public void draw() {
+	public  void draw() {
 		background(0x00, 0x10, 0x21);
 
-		// stroke(0x2A, 0xFC, 0x98);
-		// line(200, 100, width - 100, height - 200);
-
-		// stroke(0xED, 0x25, 0x4E);
-		// line(100, 100, width - 100, height - 100);
-
-		// stroke(0x2D, 0xE1, 0xFC);
-		// line(100, 200, width - 200, height - 100);
-
-		// stroke(0xF9, 0xDC, 0x5C);
-		// line(width - 100, 100, 100, height - 100);
+		textSize(12);
 
 		fill(0xED, 0x25, 0x4E);
 		textAlign(PApplet.LEFT);
@@ -93,16 +100,49 @@ public class EngineInterface extends PApplet{
 		text("shine 3 / procsynth", width/2, height-10);
 
 		pushMatrix();
-		ortho();
-		translate(width/2, height/2);
-		rotateX(PApplet.HALF_PI*height/(mouseY/2+height/2));
-		rotateZ(PApplet.QUARTER_PI*1.2f);
+
+		// tweak frustrum near and far plane to avoid clipping;
+		ortho(-width/2, width/2, -height/2, height/2, -height, 2*height);
+		camera(Math.min(width, height)/1.8f, Math.min(width, height)/2.0f, (Math.min(width, height)/2.0f) / tan(PI*50.0f / 180.0f), 0, 0, 0, 0, 0, -1);
+
+		u.captureViewMatrix(this);
+		u.calculatePickPoints(this, mouseX, mouseY);
+		PVector mouse = u.intersect(0);
+
 		noFill();
-		stroke(0x2A, 0xFC, 0x98);
+
+		pushMatrix();
+		translate(-300, 0);
+		stroke(0xED, 0x25, 0x4E); // rouge
 		box(150);
-		translate(200, 200);
+		translate(200, 0);
+		stroke(0x2A, 0xFC, 0x98); // vert
 		box(150);
+		translate(200, 0);
+		stroke(0x2D, 0xE1, 0xFC); // bleu
+		box(150);
+		translate(200, 0);
+		stroke(0xF9, 0xDC, 0x5C); // jaune
+		box(150);
+
+		popMatrix();
+
+		translate(mouse.x, mouse.y);
+
+		stroke(0xED, 0x25, 0x4E); // rouge
+		line(0, 0, 0, 100, 0, 0);
+		stroke(0x2A, 0xFC, 0x98); // vert
+		line(0, 0, 0, 0, -100, 0);
+		stroke(0x2D, 0xE1, 0xFC); // bleu
+		line(0, 0, 0, 0, 0, 100);
+
+		// rotateZ(PI);
+		fill(0x2A, 0xFC, 0x98); // vert
+		textAlign(PApplet.LEFT, PApplet.BOTTOM);
+		text(mouseX+";"+mouseY+";", 10, -10);
+
 		popMatrix();
 	}
+
 }
 
