@@ -38,7 +38,10 @@
             version="true"
             use="true"
             stylesheetfile="${data.dir}/custom-javadoc.css"
-            access="private"/>
+            access="private">
+            <link offline="true" href="http://docs.oracle.com/javase/8/docs/api/" 
+                packagelistLoc="data/" />
+            </javadoc>
     </target>
 
     <target name="build" depends="clean, compile, jar" />
