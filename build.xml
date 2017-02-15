@@ -1,7 +1,7 @@
 <project name="Shine3" basedir="." default="run">
 
     <property name="lib.dir"     value="libs" />
-    <property name="doc.dir"     value="doc" />
+    <property name="doc.dir"     value="docs" />
     <property name="data.dir"     value="data" />
     <property name="src.dir"     value="java" />
     <property name="scripts.dir" value="javascript" />
