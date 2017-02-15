@@ -12,7 +12,6 @@ import procsynth.shine3.engine.*;
  *
  */
 public final class DummyShine extends Block{
-	public DummyShine(){	
-	}
+
 }
 

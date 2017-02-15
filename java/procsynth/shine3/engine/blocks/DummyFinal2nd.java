@@ -12,7 +12,6 @@ import procsynth.shine3.engine.*;
  *
  */
 public final class DummyFinal2nd extends DummyAbstract{
-	public DummyFinal2nd(){	
-	}
+
 }
 

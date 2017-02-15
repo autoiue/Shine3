@@ -11,8 +11,6 @@ import procsynth.shine3.engine.*;
  *	@since  v0.0.1
  *
  */
-public abstract class DummyAbstract extends Block{
-	public DummyAbstract(){	
-	}
+public class DummyAbstract extends Block{
 }
 

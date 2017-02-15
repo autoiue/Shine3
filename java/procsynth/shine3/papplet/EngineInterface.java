@@ -19,20 +19,14 @@ import processing.event.*;
  */
 public class EngineInterface extends PApplet{
 
-	/**
-	*	Stores the arguments passed the Processing sketch 
-	*/
+	/**	Stores the arguments passed the Processing sketch */
 	private static final String[] PAPPLET_ARGS = new String[] { "" };
 
-	/**
-	*	The reference of the BlockEngine that is interfaced
-	*/
+	/**	The reference of the BlockEngine that is interfaced. */
 	private BlockEngine engine;
 
-	/**
-	*	OPenGL like unproject
-	*/
-	Unproject u = new Unproject();
+	/**	OPenGL like GluUnproject. */
+	private Unproject u = new Unproject();
 
 	/**
 	*	This creates a PApplet sketch that will render a representation of the BlockEngine.
@@ -49,18 +43,13 @@ public class EngineInterface extends PApplet{
 
 	}
 
-	/**
-	* 	Settings of the PApplet.
-	*/
+	/** Settings of the PApplet.*/
 	public void settings() {
 		size(1280, 720, PApplet.P3D);
 		smooth(8);
 	}
 
-	/**
-	* 	Setup of the PApplet.
-	*	Set renderer properties.
-	*/
+	/**	Setup of the PApplet. Set renderer properties. */
 	public void setup() {
 		frameRate(160);
 		surface.setResizable(true);
@@ -80,7 +69,7 @@ public class EngineInterface extends PApplet{
 	}
 
 	/**
-	* 	Main loop for the PApplet.
+	* 	Main loop of the PApplet.
 	*/
 	public  void draw() {
 		background(0x00, 0x10, 0x21);

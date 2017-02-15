@@ -15,8 +15,42 @@ package procsynth.shine3.engine;
  *  @see BlockEngine
  *  @see BlockFactory
  */
-public abstract class Block{
+public class Block{
+
+	/** 
+	*	A unique string that will be used to reconstruct the block objet when needed.
+	*
+	*	@see #generateBlockIdString
+	*/
+	private final String idString;
+	/** @return the idString of the block instance. */
+	public String getIdString(){ return idString;}
+
+	/** Used to construct a totally new Block instance */
 	public Block(){	
+		this.idString = generateBlockIdString();
 	}
+
+	/** 
+	*	Used to restore a Block instance.
+	*
+	* 	@param idString the string to restore the block from
+	*/
+	public Block(String idString){	
+		this.idString = idString;
+	}
+
+	/** 
+	*	Generate a unique string that will be used to reconstruct the block objet when needed.
+	*	
+	*	It's structure is:
+	*	<code>{fully qualified classname of block class of blockFactory class}:{uniqueid string}</code>
+	*
+	*	@return the id string
+	*/
+	private String generateBlockIdString(){
+		return this.getClass().getName()+":"+"4(totallyFairRandomNumberFromDice)";
+	}
+
 }
 

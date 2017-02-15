@@ -7,12 +7,6 @@ import java.net.URL;
 import java.util.jar.Manifest;
 import java.util.jar.Attributes;
 import java.io.IOException;
-import java.lang.reflect.Modifier;
-
-
-import java.util.*;
-
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
 import procsynth.shine3.engine.*;
 import procsynth.shine3.papplet.*;
@@ -32,13 +26,13 @@ public class Shine3{
 	*/
 	public static String VERSION = "unknow";
 
-	/**
-	* Main application objects used by blocks.
-	*
-	* @see Block
-	*/
+	/** Self reference of main class.*/
 	public static Shine3 S3;
+
+	/** The BlockEngine instance.*/
 	public static BlockEngine engine;
+
+	/** The EngineInterface instance.*/
 	public static EngineInterface papplet;
 
 	/**
@@ -69,15 +63,13 @@ public class Shine3{
 
 		engine = new BlockEngine();
 		papplet = new EngineInterface(engine);
-
-		getAvailableBlocks();
 	}
 
 	
 	/**
 	*	Retrieves the version string from the manifest.
 	* 	The version string reflect the state of the git repository.
-	*	It is obtained by the command <code>git describe --tags --dirty --always</code>
+	*	It is obtained by the command <code>git describe --tags --dirty --always</code>.
 	*   <br>
 	*	See build.xml file
 	*
@@ -95,23 +87,5 @@ public class Shine3{
 			version = attr.getValue("Specification-Version");
 		} catch (IOException E) {}
 		return version;
-	}
-
-	/**
-	*	Scan the classpath to find all subclasses of superclass {@link Block}.
-	*
-	*/
-	private void getAvailableBlocks(){
-		List<Class<? extends Block>> blockSubclasses = new ArrayList<>();
-
-		new FastClasspathScanner(/*Block.class.getPackage().getName(), ""*/)
-		.matchSubclassesOf(Block.class, blockSubclasses::add)
-		.scan();
-
-		for(Class<? extends Block> b : blockSubclasses){
-			System.out.println(b.getName()+
-			                   (Modifier.isFinal(b.getModifiers()) ? " [final]" : "")
-			                   );
-		}
 	}
 }
