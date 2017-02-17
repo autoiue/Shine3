@@ -76,9 +76,11 @@ public class EngineInterface extends PApplet{
 
 		textSize(12);
 
-		fill(0xED, 0x25, 0x4E);
+		fill(0xED, 0x25, 0x4E); // rouge
 		textAlign(PApplet.LEFT);
-		text(frameRate, 10, height - 10);
+		text(Math.round(frameRate)+" FPS", 10, height - 10);
+		fill(0x2A, 0xFC, 0x98); // vert
+		text(Math.round(Shine3.engine.getTickRate())+" TPS", 60, height - 10);
 
 		fill(0x2A, 0xFC, 0x98);
 		textAlign(PApplet.RIGHT);
