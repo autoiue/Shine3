@@ -88,7 +88,7 @@
         </jar>
     </target>
 
-    <target name="run" depends="doc, build">
+    <target name="run" depends="build">
         <java jar="${jar.dir}/${ant.project.name}_${project.version}.jar" fork="true" >
         </java>
     </target>
