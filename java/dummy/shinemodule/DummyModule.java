@@ -14,14 +14,10 @@ import procsynth.shine3.engine.*;
 public final class DummyModule extends Block{
 
 	public DummyModule(){
-		newInput("ear", "");
-		newOutput("mouth", "");
+		this.displayName = "module";
 	}
 
 	public void tick(){
-		String heard = "I heard: " + (String) get("ear");
-		System.out.println(heard);
-		set("mouth", heard);    
 	}
 }
 

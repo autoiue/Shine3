@@ -61,17 +61,22 @@ public class Block{
 	public String getIdString(){ return idString;}
 
 	/**	List the inputs of the block. */
-	private Map<String, Input> inputs = new HashMap();
+	private Map<String, Input> inputs = new LinkedHashMap();
 	/** @return the list of inputs of this block */
 	public Map<String, Input> getInputs(){ return inputs; }
 	/** List the outputs of the block. */
-	private Map<String, Output> outputs = new HashMap();
+	private Map<String, Output> outputs = new LinkedHashMap();
 	/** @return the list of inputs of this block */
 	public Map<String, Output> getOutputs(){ return outputs; }
+	/** the name that will be displayed */
+	protected String displayName;
+	/** @return the display name of the block */
+	public String getDisplayName(){ return displayName; }
 
 	/** Used to construct a totally new Block instance */
 	public Block(){	
 		this.idString = generateBlockIdString();
+		this.displayName = this.getClass().getSimpleName().toLowerCase();
 	}
 
 	/** 

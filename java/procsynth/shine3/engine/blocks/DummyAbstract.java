@@ -12,5 +12,8 @@ import procsynth.shine3.engine.*;
  *
  */
 public class DummyAbstract extends Block{
+	public DummyAbstract(){
+		this.displayName = "second";
+	}
 }
 

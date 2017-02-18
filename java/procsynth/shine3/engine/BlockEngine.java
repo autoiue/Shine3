@@ -2,6 +2,8 @@
 
 package procsynth.shine3.engine;
 
+import procsynth.shine3.engine.blocks.*;
+
 import java.util.*;
 import java.lang.reflect.Modifier;
 
@@ -16,12 +18,15 @@ public class BlockEngine extends Thread{
 
 	/**	List available blocks */
 	private List<Class<? extends Block>> availableBlocks = new ArrayList<>();
-
+	/** @return available blocks */
+	public List<Class<? extends Block>> getAvailableBlocks(){return new ArrayList(availableBlocks);}
 	/**	List available factories */
 	private List<Class<? extends BlockFactory>> availableFactories = new ArrayList<>();
 
 	/** Stores all blocks currently in the engine */
 	private List<Block> blocks = new ArrayList();
+	/** @return the block tree */
+	public List<Block> getBlocks(){return new ArrayList(blocks);}
 	/** Stores all blocks resolved block for the current tick */
 	private List<Block> resolved = new ArrayList();
 
@@ -49,8 +54,11 @@ public class BlockEngine extends Thread{
 
 		// A test block
 		try{
-			addBlock(availableBlocks.get(0));
-			addBlock(availableBlocks.get(0));
+			addBlock(Not.class);
+			addBlock(Hertz.class);
+			addBlock(Or.class);
+			addBlock(procsynth.shine3.shine.blocks.DummyShine.class);
+			blocks.get(0).getInputs().get("A").setSource(blocks.get(1).getOutputs().get("hertz"));
 		}catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -75,7 +83,6 @@ public class BlockEngine extends Thread{
 
 			tick();
 			ticks++;
-			System.out.println(ticks);
 
 			long afterTime = System.nanoTime();
 			long timeDiff = afterTime - now;
@@ -122,11 +129,6 @@ public class BlockEngine extends Thread{
 			Block source = i.getSourceBlock();
 			if(source != null && resolved.indexOf(source) == -1){
 				resolve(source);
-			}else{
-				if(source != null)
-					System.out.println("END RECURSIV: "+ source.getIdString());
-				else
-					System.out.println("NULL RECURSIV");
 			}
 		}
 		// fetch new values

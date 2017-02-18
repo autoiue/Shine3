@@ -12,6 +12,8 @@ import procsynth.shine3.engine.*;
  *
  */
 public final class DummyFinal extends Block{
-
+	public DummyFinal(){
+		this.displayName = "final";
+	}
 }
 
