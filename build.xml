@@ -2,7 +2,8 @@
 
     <property name="lib.dir"     value="libs" />
     <property name="doc.dir"     value="docs" />
-    <property name="data.dir"     value="data" />
+    <property name="data.dir"    value="data" />
+    <property name="icon.dir"    value="icon" />
     <property name="src.dir"     value="java" />
     <property name="scripts.dir" value="javascript" />
     <property name="build.dir"   value="build" />
@@ -76,9 +77,10 @@
             <arg value="--dirty"/>
             <arg value="--always"/>
         </exec>
-        <jar destfile="${jar.dir}/${ant.project.name}_${project.version}.jar" basedir="${classes.dir}">
+        <jar destfile="${jar.dir}/${ant.project.name}_${project.version}.jar" basedir="${classes.dir}" duplicate="preserve">
             <fileset dir="." includes="${data.dir}/**" />
             <fileset dir="." includes="${scripts.dir}/**/*" />
+            <fileset dir="." includes="${icon.dir}/**/*" />
             <zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
             <manifest>
                 <attribute name="Main-Class" value="${main-class}" />
