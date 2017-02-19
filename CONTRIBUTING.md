@@ -1,5 +1,8 @@
-# Folder organization
+# Javadoc
 
+The Javadoc can be found [here](https://pr0csynth.github.io/Shine3/docs) or in the `docs` folder.
+
+# Folder organization
 
 - `libs` External java libs goes here.
 
@@ -11,4 +14,4 @@
 	- `shine` is where are defined the specific blocks, blockfactory, interfaces that permit the manipulation of DMX, sequences, ...  
 - `javascript` Third party scripts or application scripts goes here.
 
-## 
+#
