@@ -1,8 +1,12 @@
+
+<img src="https://github.com/pr0csynth/Shine3/blob/master/icon/icon-256.png?raw=true" alt="Shine 3" width="128px"/>
+
 # Shine 3
 
 Shine is a software that let you control the real world in a predefined manner or using live data from controllers or sensors to enable any live performance.
+
 Primarily it will support Arduino and Raspberry PI, MIDI, DMX using OLA and live sound analysis using Minim.
-Shine3 is yet again another iteration of the Shine Project. 
+Shine3 is yet again another iteration of the Shine Project.
 
 ## The Block Engine
 
