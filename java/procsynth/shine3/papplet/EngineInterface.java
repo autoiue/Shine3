@@ -61,11 +61,6 @@ public class EngineInterface extends PApplet{
 	*/
 	public void draw() {
 		background(0x00, 0x10, 0x21);
-
-		drawStatus();
-		drawMinimap();
-		drawBlockMenu();
-
 		pushMatrix();
 
 		// setup 3D camera
@@ -82,6 +77,11 @@ public class EngineInterface extends PApplet{
 		drawCursor(mouse);
 
 		popMatrix();
+
+		drawStatus();
+		drawMinimap();
+		drawBlockMenu();
+
 	}
 
 	private void drawStatus(){
