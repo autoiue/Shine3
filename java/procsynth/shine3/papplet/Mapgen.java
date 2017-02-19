@@ -15,6 +15,10 @@ class Mapgen{
 	public static int maxLevel = 0;
 	public static int level = 0;
 
+	/**
+	 * @param blocks the block tree
+	 * @return the block tree mapped on a 2D plane
+	 */
 	public static Map<Pair<Integer, Integer>, Block> getOrthoMap(List<Block> blocks){
 
 		for(Block b : blocks){
@@ -28,6 +32,10 @@ class Mapgen{
 		return map;
 	}
 
+	/**
+	 * @param origin the block from which begin the tree
+	 * @param level the level of that block in the tree
+	 */
 	private static void place(Block origin, int level){
 		int nextSpot = 0;
 		maxLevel = Math.max(level, maxLevel);
