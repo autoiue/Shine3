@@ -28,9 +28,6 @@ public class EngineInterface extends PApplet{
 	/**	The reference of the BlockEngine that is interfaced. */
 	private BlockEngine engine;
 
-	/**	OPenGL like GluUnproject. */
-	private Unproject u = new Unproject();
-
 	/**
 	*	This creates a PApplet sketch that will render a representation of the BlockEngine.
 	*
@@ -77,13 +74,12 @@ public class EngineInterface extends PApplet{
 		ortho(-width/2, width/2, -height/2, height/2, -height, 2*height);
 		camera(Math.min(width, height)/1.8f, Math.min(width, height)/2.0f, (Math.min(width, height)/2.0f) / tan(PI*28.0f / 180.0f), 0, 0, 0, 0, 0, -1);
 
-		u.captureViewMatrix(this);
-		u.calculatePickPoints(this, mouseX, mouseY);
-		PVector mouse = u.intersect(0);
+		Unproject.captureViewMatrix(this);
+		PVector mouse = Unproject.unproject(mouseX, mouseY, 0);
 
 		// todo draw block tree
 
-		// drawCursor(mouse);
+		drawCursor(mouse);
 
 		popMatrix();
 	}

@@ -14,33 +14,47 @@ import processing.opengl.*;
 public class Unproject{
 	
 	// True if near and far points calculated.
-	public boolean isValid() { return m_bValid; }
-	private boolean m_bValid = false;
+	private static boolean m_bValid = false;
 	
 	// Maintain own projection matrix.
-	public PMatrix3D getMatrix() { return m_pMatrix; }
-	private PMatrix3D m_pMatrix = new PMatrix3D();
+	private static PMatrix3D m_pMatrix = new PMatrix3D();
  
 	 // Maintain own viewport data.
-	public int[] getViewport() { return m_aiViewport; }
-	private int[] m_aiViewport = new int[4];
+	private static int[] m_aiViewport = new int[4];
 
 	// Store the near and far ray positions.
-	public PVector ptStartPos = new PVector();
-	public PVector ptEndPos = new PVector();
+	private static PVector ptStartPos = new PVector();
+	private static PVector ptEndPos = new PVector();
+
+
+	/**
+	*	This return the projected on screen point on a XY plane with a specific Z coordinates 
+	*	Call this many times as necessary after {@link #captureViewMatrix}.
+	*
+	*	@param x the x coordinate of the on screen point
+	*	@param y the y coordinate of the on screen point
+	*	@param interZ the z coordinate of a XY plane to intersect with
+	*	@return the 3D vector of the projection of the point on the plane
+	*	
+	*/
+	public static PVector unproject(float x, float y, float interZ){
+		calculatePickPoints(x, y);
+		return intersect(interZ);
+	}
 
 	/**
 	*	This capture the view matrix of the PApplet and stores it.
+	*	Call this first once you set the view with camera/ortho/rotate/translate/etc.
 	*
 	*	@param p PApplet state
 	*	
 	*/
-	public void captureViewMatrix(PApplet p)
+	public static void captureViewMatrix(PApplet p)
 	{ // Call this to capture the selection matrix after 
 		// you have called perspective() or ortho() and applied your
 		// pan, zoom and camera angles - but before you start drawing
 		// or playing with the matrices any further.
-		
+
 		PGraphics3D g3d = (PGraphics3D)p.g;
 
 		// if (g3d == null)
@@ -81,7 +95,7 @@ public class Unproject{
 	*	@return If the given point is valid.
 	*	
 	*/
-	public boolean gluUnProject(float winx, float winy, float winz, PVector result)
+	private static boolean gluUnProject(float winx, float winy, float winz, PVector result)
 	{
 
 		float[] in = new float[4];
@@ -137,12 +151,13 @@ public class Unproject{
 	*	@return If the given point is valid.
 	*	
 	*/
-	public boolean calculatePickPoints(PApplet p, int x, int y)
+	private static boolean calculatePickPoints(float x, float y)
 	{ // Calculate positions on the near and far 3D frustum planes.
 		m_bValid = true; // Have to do both in order to reset PVector on error.
 
-		if (!gluUnProject((float)x, p.height - (float)y, 0.0f, ptStartPos)) m_bValid = false;
-		if (!gluUnProject((float)x, p.height - (float)y, 1.0f, ptEndPos)) m_bValid = false;
+		// m_aiViewport[3] == p.height
+		if (!gluUnProject((float)x, m_aiViewport[3] - (float)y, 0.0f, ptStartPos)) m_bValid = false;
+		if (!gluUnProject((float)x, m_aiViewport[3]- (float)y, 1.0f, ptEndPos)) m_bValid = false;
 		return m_bValid;
 	}
 
@@ -155,7 +170,7 @@ public class Unproject{
 	*	
 	*/
 
-	public PVector intersect(float z){
+	private static PVector intersect(float z){
 		//
 		// ptStartPos , ptEndPos: define the line
 		// p_co, p_no: define the plane:
