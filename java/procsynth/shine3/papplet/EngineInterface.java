@@ -51,6 +51,7 @@ public class EngineInterface extends PApplet{
 	public void setup() {
 		frameRate(160);
 		surface.setResizable(true);
+		frame.setTitle("Shine 3");
 		hint(PApplet.DISABLE_DEPTH_TEST);
 
 		textFont(loadFont("Raleway-Regular-18.vlw"));
