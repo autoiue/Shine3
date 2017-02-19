@@ -144,7 +144,6 @@ public class Unproject{
 	/**
 	*	Take a point on screen and project it the near and far plane of the fustrum. 
 	*
-	*	@param p The parent PApplet
 	*	@param x The coordinates X of the point on screen.
 	*	@param y The coordinates Y of the point on screen.
 	*
