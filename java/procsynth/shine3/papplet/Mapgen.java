@@ -33,6 +33,22 @@ class Mapgen{
 	}
 
 	/**
+	 * @param blocks the block tree
+	 * @return the block tree mapped on a 2D plane
+	 */
+	public static Map<Block, Pair<Integer, Integer>> getOrthoMapByBlock(List<Block> blocks){
+		Map<Block, Pair<Integer, Integer>> mapByBlock = new HashMap();
+
+		getOrthoMap(blocks);
+
+		for(Pair p : map.keySet()){
+			mapByBlock.put(map.get(p), p);
+		}
+
+		return mapByBlock;
+	}
+
+	/**
 	 * @param origin the block from which begin the tree
 	 * @param level the level of that block in the tree
 	 */

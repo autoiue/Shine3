@@ -39,6 +39,10 @@ public class EngineInterface extends PApplet{
 	public EngineInterface(BlockEngine engine){
 		this.engine = engine;
 		PApplet.runSketch(PAPPLET_ARGS, this);
+
+		// generate a map for the frst time
+		List<Block> blocks = Shine3.engine.getBlocks();
+		Map<Pair<Integer, Integer>, Block> map = Mapgen.getOrthoMap(blocks);
 	}
 
 	/** Settings of the PApplet.*/
@@ -64,6 +68,8 @@ public class EngineInterface extends PApplet{
 		background(0x00, 0x10, 0x21);
 		pushMatrix();
 
+		List<Block> blocks = Shine3.engine.getBlocks();
+
 		// setup 3D camera
 
 		// tweak frustrum near and far plane to avoid clipping;
@@ -76,13 +82,58 @@ public class EngineInterface extends PApplet{
 		// todo draw block tree
 
 		drawCursor(mouse);
+		draw3DMap(blocks, mouse);
 
 		popMatrix();
 
 		drawStatus();
-		drawMinimap();
+		drawMinimap(blocks);
 		drawBlockMenu();
 
+	}
+
+	private void draw3DMap(List<Block> blocks, PVector mouse){
+
+		Map<Block, Pair<Integer, Integer>> map = Mapgen.getOrthoMapByBlock(blocks);
+
+		rectMode(CORNER);
+		fill(Palette.RED);
+		noFill();
+
+		for(Block b : blocks){
+			Pair<Integer, Integer> coords = map.get(b);
+			pushMatrix();
+
+			if(
+			   coords.A() * -170 - 120/2 < mouse.x && mouse.x < coords.A() * -170 + 120/2 &&
+			   coords.B() * 220 - 170/2 < mouse.y && mouse.y < coords.B() * 220 + 170/2){
+				stroke(Palette.RED);
+			}else{
+				stroke(Palette.BLUE);
+			}
+			translate(coords.A() * -170, coords.B() * 220, -15);
+			box(120, 170, 30);
+			translate(0,0, 15);
+			rotateZ(-HALF_PI);
+			translate(-170/2, -120/2);
+			text(b.getDisplayName(), 0 , 0);
+
+			int offsetOut = 170 - 20;
+			for(Output o : b.getOutputs().values()){
+				stroke(Palette.YELLOW);
+				ellipse(offsetOut, 120 - 9, 10, 10);
+				offsetOut -= 20;
+			}
+			int offsetIn = 170 - 20;
+			for(Input o : b.getInputs().values()){
+				stroke(Palette.GREEN);
+				ellipse(offsetIn, 9, 10, 10);
+				offsetOut -= 20;
+			}
+
+
+			popMatrix();
+		}
 	}
 
 	private void drawStatus(){
@@ -133,9 +184,8 @@ public class EngineInterface extends PApplet{
 		}	
 	}
 
-	private void drawMinimap(){
+	private void drawMinimap(List<Block> blocks){
 		
-		List<Block> blocks = Shine3.engine.getBlocks();
 		Map<Pair<Integer, Integer>, Block> map = Mapgen.getOrthoMap(blocks);
 
 		System.out.println("min: "+ Mapgen.level +" max: "+ Mapgen.maxLevel +" width: "+Mapgen.maxSpot);

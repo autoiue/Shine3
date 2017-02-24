@@ -40,11 +40,11 @@ public final class Pair<A, B> {
 		return "(" + first + ", " + second + ")"; 
 	}
 
-	public A getFirst() {
+	public A A() {
 		return first;
 	}
 
-	public B getSecond() {
+	public B B() {
 		return second;
 	}
 
