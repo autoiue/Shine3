@@ -8,7 +8,9 @@ package procsynth.shine3.papplet;
 public class Palette{
 	public static final int RED 	= 0xFFed254e;
 	public static final int GREEN 	= 0xFF2afc98;
-	public static final int BLUE 	= 0xFF2de1fc;
+	public static final int BLUE 	= 0xFF20DFFC;
 	public static final int YELLOW	= 0xFFf9dc5c;
 	public static final int BLACK	= 0xFF001021;
+	public static final int PURPLE	= 0xFF001021;
+	public static final int ORANGE	= 0xFFF34213;
 }

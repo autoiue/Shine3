@@ -109,7 +109,7 @@ public class EngineInterface extends PApplet{
 			   coords.B() * 220 - 170/2 < mouse.y && mouse.y < coords.B() * 220 + 170/2){
 				stroke(Palette.RED);
 			}else{
-				stroke(Palette.BLUE);
+				stroke(Palette.ORANGE);
 			}
 			translate(coords.A() * -170, coords.B() * 220, -15);
 			box(120, 170, 30);
