@@ -3,6 +3,7 @@
 package procsynth.shine3.engine;
 
 import procsynth.shine3.engine.blocks.*;
+import procsynth.shine3.engine.world.*;
 
 import java.util.*;
 import java.lang.reflect.Modifier;
@@ -48,9 +49,10 @@ public class BlockEngine extends Thread{
 
 	/** Instanciate a BlockEngine and start the engine thread. */
 	public BlockEngine(){	
-		scanAvailable();
+		scanAvailableBlocks();
 
 		this.start();
+		new World();
 
 		// A test block
 		try{
@@ -73,6 +75,8 @@ public class BlockEngine extends Thread{
 
 		long tickRateLastNanos = 0L;
       	long overSleepTime = 0L;
+
+      	Thread.currentThread().setName("Shine3 Engine");
 
 		while(true){
 			long now = System.nanoTime();
@@ -152,7 +156,7 @@ public class BlockEngine extends Thread{
 	*	<br>
 	*	Classes has to be final.
 	*/
-	private void scanAvailable(){
+	private void scanAvailableBlocks(){
 		List<Class<? extends Block>> blockSubclasses = new ArrayList<>();
 		List<Class<? extends BlockFactory>> blockFactorySubclasses = new ArrayList<>();
 
