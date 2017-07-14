@@ -8,6 +8,9 @@ Shine is a software that let you control the real world in a predefined manner o
 Primarily it will support Arduino and Raspberry PI, MIDI, DMX using OLA and live sound analysis using Minim.
 Shine3 is yet again another iteration of the Shine Project.
 
+![screenshot from 2017-07-15 01-44-28](https://user-images.githubusercontent.com/22014799/28234379-3bac894c-68ff-11e7-80e5-72a0a04c26cb.png)
+
+
 ## The Block Engine
 
 Inspired by MaxMSP, the block are small programs that have inputs and outputs. The block engine enables interconnections between these blocks.
