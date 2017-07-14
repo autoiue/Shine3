@@ -4,11 +4,9 @@ package procsynth.shine3.engine;
 
 import procsynth.shine3.engine.blocks.*;
 import procsynth.shine3.engine.world.*;
+import procsynth.shine3.Shine3;
 
 import java.util.*;
-import java.lang.reflect.Modifier;
-
-import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
 /**
  *	
@@ -18,11 +16,11 @@ import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 public class BlockEngine extends Thread{
 
 	/**	List available blocks */
-	private List<Class<? extends Block>> availableBlocks = new ArrayList<>();
+	private List<Class<?>> availableBlocks = new ArrayList<>();
 	/** @return available blocks */
-	public List<Class<? extends Block>> getAvailableBlocks(){return new ArrayList(availableBlocks);}
+	public List<Class<?>> getAvailableBlocks(){return new ArrayList(availableBlocks);}
 	/**	List available factories */
-	private List<Class<? extends BlockFactory>> availableFactories = new ArrayList<>();
+	private List<Class<?>> availableFactories = new ArrayList<>();
 
 	/** Stores all blocks currently in the engine */
 	private List<Block> blocks = new ArrayList();
@@ -33,6 +31,7 @@ public class BlockEngine extends Thread{
 
 	/** Stores number of ticks since start */
 	private long ticks = 0L;
+	public long getTicks(){return ticks;}
 
 
 	/**
@@ -48,8 +47,10 @@ public class BlockEngine extends Thread{
 	private long  targetPeriod = (long)(1000000000L / 42f); // target is 42 tps
 
 	/** Instanciate a BlockEngine and start the engine thread. */
-	public BlockEngine(){	
-		scanAvailableBlocks();
+	public BlockEngine(){
+
+		availableBlocks = Shine3.modules.getClasses(Block.class);
+		availableFactories = Shine3.modules.getClasses(BlockFactory.class);
 
 		this.start();
 		new World();
@@ -59,7 +60,8 @@ public class BlockEngine extends Thread{
 			addBlock(Not.class);
 			addBlock(Hertz.class);
 			addBlock(Or.class);
-			addBlock(procsynth.shine3.shine.blocks.DummyShine.class);
+			addBlock(availableBlocks.get(0));
+
 			blocks.get(0).getInputs().get("A").setSource(blocks.get(1).getOutputs().get("hertz"));
 		}catch (Exception e) {
 			e.printStackTrace();
@@ -151,42 +153,6 @@ public class BlockEngine extends Thread{
 		targetPeriod = (long) (1000000000.0 / tps);
 	}
 
-	/**
-	*	Scan the classpath to find all subclasses of superclasses {@link Block} and {@link BlockFactory}.
-	*	<br>
-	*	Classes has to be final.
-	*/
-	private void scanAvailableBlocks(){
-		List<Class<? extends Block>> blockSubclasses = new ArrayList<>();
-		List<Class<? extends BlockFactory>> blockFactorySubclasses = new ArrayList<>();
-
-		// Scan for any class that inherits from Block class
-		new FastClasspathScanner()
-		.matchSubclassesOf(Block.class, blockSubclasses::add)
-		.scan();
-
-		// Scan for any class that inherits from BlockFactory class
-		new FastClasspathScanner()
-		.matchSubclassesOf(BlockFactory.class, blockFactorySubclasses::add)
-		.scan();
-
-		// Filter classes that aren't final to avoid to use incomplete implementations
-		for(Class<? extends Block> b : blockSubclasses){
-			if(Modifier.isFinal(b.getModifiers())){
-				availableBlocks.add(b);	
-			}
-		}
-		System.out.println("FOUND "+availableBlocks.size()+" FINAL BLOCKS.");
-
-		for(Class<? extends BlockFactory> f : blockFactorySubclasses){
-			if(Modifier.isFinal(f.getModifiers())){
-				availableFactories.add(f);	
-			}
-		}
-		System.out.println("FOUND "+availableFactories.size()+" FACTORIES.");
-
-	}
-
 	/** 
 	*	Add a new block to the engine
 	*	
@@ -196,11 +162,11 @@ public class BlockEngine extends Thread{
 	*	@throws InstantiationException if instanciation goes wrong.
 	*	@throws IllegalAccessException if instanciation goes wrong.
 	*/
-	public void addBlock(Class<? extends Block> blockClass) throws EngineExceptions.UnknowClass, InstantiationException, IllegalAccessException{
+	public void addBlock(Class<?> blockClass) throws EngineExceptions.UnknowClass, InstantiationException, IllegalAccessException{
 		if(availableBlocks.indexOf(blockClass) == -1){
 			throw new EngineExceptions.UnknowClass();
 		}
-		Block b = blockClass.newInstance();
+		Block b = (Block)blockClass.newInstance();
 		blocks.add(b);
 		System.out.println(b.getIdString());
 	}

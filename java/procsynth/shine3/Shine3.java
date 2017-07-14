@@ -7,6 +7,7 @@ import java.net.URL;
 import java.util.jar.Manifest;
 import java.util.jar.Attributes;
 import java.io.IOException;
+import java.security.Policy;
 
 import procsynth.shine3.engine.*;
 import procsynth.shine3.papplet.*;
@@ -29,6 +30,9 @@ public class Shine3{
 	/** Self reference of main class.*/
 	public static Shine3 S3;
 
+	/** Self reference of main class.*/
+	public static Modules modules;
+
 	/** The BlockEngine instance.*/
 	public static BlockEngine engine;
 
@@ -43,6 +47,11 @@ public class Shine3{
 	* @see #Shine3
 	*/
 	public static void main(String[] args) {
+		Policy.setPolicy(new ModulesPermissions());
+  		System.setSecurityManager(new SecurityManager());   
+
+		modules = new Modules();
+		modules.addPath(System.getProperty("user.home")+"/.shine3/modules/");
 		S3 = new Shine3();
 	}
 

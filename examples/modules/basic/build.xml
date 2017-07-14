@@ -1,15 +1,13 @@
-<project name="Shine3" basedir="." default="run">
+<project name="Shine3_BasicModule" basedir="." default="build">
 
     <property name="lib.dir"     value="libs" />
-    <property name="doc.dir"     value="docs" />
     <property name="data.dir"    value="data" />
-    <property name="icon.dir"    value="icon" />
     <property name="src.dir"     value="java" />
     <property name="scripts.dir" value="javascript" />
     <property name="build.dir"   value="build" />
     <property name="classes.dir" value="${build.dir}/classes" />
     <property name="jar.dir"     value="dist" />
-    <property name="main-class"  value="procsynth.shine3.Shine3" />
+    <property name="shine3.lib"  value="../../../dist/Shine3_latest.jar" />
 
 
     <fileset id="library.directory" dir="${lib.dir}">
@@ -18,6 +16,11 @@
 
     <path id="build.classpath">
         <fileset refid="library.directory" />
+    </path>
+   
+    <path id="compile.classpath">
+        <fileset refid="library.directory" />
+        <pathelement location="${shine3.lib}" />
     </path>
 
     <pathconvert property="manifest.classpath" pathsep=" ">
@@ -30,21 +33,6 @@
         </mapper>
     </pathconvert>
 
-    <target name="doc" description="generate documentation">
-        <javadoc 
-            sourcepath="${src.dir}" 
-            destdir="${doc.dir}"
-            classpathref="build.classpath"
-            author="true"
-            version="true"
-            use="true"
-            stylesheetfile="${data.dir}/custom-javadoc.css"
-            access="private">
-            <link offline="true" href="http://docs.oracle.com/javase/8/docs/api/" 
-                packagelistLoc="data/" />
-            </javadoc>
-    </target>
-
     <target name="build" depends="clean, compile, jar" />
 
     <target name="clean">
@@ -56,7 +44,7 @@
         <javac srcdir="${src.dir}"
                destdir="${classes.dir}"
                debug="true"
-               classpathref="build.classpath"
+               classpathref="compile.classpath"
                includeantruntime="false">
         </javac>
     </target>
@@ -71,29 +59,15 @@
             <arg value="-1"/>
             <arg value="${scripts.dir}/blocks"/>
         </exec>
-         <exec executable="git" outputproperty="project.version">
-            <arg value="describe"/>
-            <arg value="--tags"/>
-            <arg value="--dirty"/>
-            <arg value="--always"/>
-        </exec>
-        <jar destfile="${jar.dir}/${ant.project.name}_${project.version}.jar" basedir="${classes.dir}" duplicate="preserve">
+
+        <jar destfile="${jar.dir}/${ant.project.name}.jar" basedir="${classes.dir}" duplicate="preserve">
             <fileset dir="." includes="${data.dir}/**" />
             <fileset dir="." includes="${scripts.dir}/**/*" />
-            <fileset dir="." includes="${icon.dir}/**/*" />
             <zipgroupfileset dir="${lib.dir}" includes="**/*.jar" />
             <manifest>
-                <attribute name="Main-Class" value="${main-class}" />
                 <attribute name="Class-Path" value="${manifest.classpath}" />
-                <attribute name="Specification-Version" value="${project.version}"/>
             </manifest>
         </jar>
-        <copy file="${jar.dir}/${ant.project.name}_${project.version}.jar" toFile="${jar.dir}/${ant.project.name}_latest.jar" />
-    </target>
-
-    <target name="run" depends="build">
-        <java jar="${jar.dir}/${ant.project.name}_${project.version}.jar" fork="true" >
-        </java>
     </target>
 
 </project>

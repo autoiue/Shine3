@@ -3,6 +3,8 @@
 package procsynth.shine3.engine.blocks;
 
 import procsynth.shine3.engine.*;
+import procsynth.shine3.*;
+import java.io.PrintWriter;
 
 /**
  *  An 'OR' block.
