@@ -1,6 +1,7 @@
 // Fraction.java
 
 package procsynth.shine3.engine.world;
+import java.util.logging.*;
 
 /**
  *  Holds a value between 0.0 and 1.0 describing a part of the world.
@@ -10,6 +11,7 @@ package procsynth.shine3.engine.world;
  */
 public class Fraction{
 
+	private final Logger log = Logger.getLogger(this.getClass().getName());
 	
 	public Fraction(){
 

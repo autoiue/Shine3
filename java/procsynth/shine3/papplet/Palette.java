@@ -1,6 +1,7 @@
 // Palette.java
 
 package procsynth.shine3.papplet;
+import java.util.logging.*;
 
 /**
  * This class regroups the color palette of Shine

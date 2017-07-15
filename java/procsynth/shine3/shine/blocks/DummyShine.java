@@ -12,6 +12,7 @@ import procsynth.shine3.engine.*;
  *
  */
 public final class DummyShine extends Block{
+	
 	public DummyShine(){
 		this.displayName = "shine";
 		newOutput("1", 1);

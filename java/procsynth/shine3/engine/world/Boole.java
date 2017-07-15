@@ -1,6 +1,7 @@
 // Boole.java
 
 package procsynth.shine3.engine.world;
+import java.util.logging.*;
 
 /**
  *  Holds a boolean value describing a part of the world.
@@ -10,6 +11,7 @@ package procsynth.shine3.engine.world;
  */
 public class Boole{
 
+	private final Logger log = Logger.getLogger(this.getClass().getName());
 	
 	public Boole(){
 

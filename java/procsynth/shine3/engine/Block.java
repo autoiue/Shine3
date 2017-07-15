@@ -4,6 +4,7 @@ package procsynth.shine3.engine;
 
 import java.util.UUID;
 import java.util.*;
+import java.util.logging.*;
 
 /**
  *	A Block is a piece of program that has inputs and outputs.
@@ -50,6 +51,9 @@ import java.util.*;
  *  @see BlockFactory
  */
 public class Block{
+	
+	private final Logger log = Logger.getLogger(this.getClass().getName());
+	
 
 	/** 
 	*	A unique string that will be used to reconstruct the block objet when needed.

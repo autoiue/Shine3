@@ -8,6 +8,7 @@ import procsynth.shine3.*;
 
 import java.util.*;
 import java.lang.reflect.Modifier;
+import java.util.logging.*;
 
 import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
 
@@ -19,6 +20,7 @@ import io.github.lukehutch.fastclasspathscanner.FastClasspathScanner;
  */
 public class World{
 
+	private final Logger log = Logger.getLogger(this.getClass().getName());
 
 	/**	List available protocols */
 	private List<Class<?>> availableProtocols = new ArrayList<>();

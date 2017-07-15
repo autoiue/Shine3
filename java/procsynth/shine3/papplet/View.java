@@ -1,6 +1,7 @@
 // View.java
 
 package procsynth.shine3.papplet;
+import java.util.logging.*;
 
 /**
  * A View is a piece of interface for a composant.
@@ -13,6 +14,9 @@ package procsynth.shine3.papplet;
  *  @see EngineInterface
  */
 public abstract class View{
+	
+	private final Logger log = Logger.getLogger(this.getClass().getName());
+	
 	public View(){	
 	}
 }

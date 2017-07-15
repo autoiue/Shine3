@@ -1,6 +1,7 @@
 // BlockFactory.java
 
 package procsynth.shine3.engine;
+import java.util.logging.*;
 
 /**
  *  A BlockFactory make blocks. It is use when a system cannont be represented by only one Block,
@@ -14,6 +15,9 @@ package procsynth.shine3.engine;
  *  @see BlockEngine
  */
 public abstract class BlockFactory{
+	
+	private final Logger log = Logger.getLogger(this.getClass().getName());
+	
 	public BlockFactory(){	
 	}
 }

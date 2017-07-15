@@ -1,6 +1,7 @@
 // Input.java
 
 package procsynth.shine3.engine;
+import java.util.logging.*;
 
 /**
  * 	An input is a part of a block that is connected to another block output.
@@ -16,6 +17,10 @@ package procsynth.shine3.engine;
  *  @see Block
  */
 public class Input<T>{
+
+	
+	private final Logger log = Logger.getLogger(this.getClass().getName());
+	
 
 	/** The source output. */
 	private Output<T> source;

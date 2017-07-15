@@ -4,6 +4,7 @@ package procsynth.shine3.papplet;
 
 import processing.core.*;
 import processing.opengl.*;
+import java.util.logging.*;
 
 /**
  *  Helper class to determine screen to 3D world positions.
@@ -12,6 +13,8 @@ import processing.opengl.*;
  *	@since  v0.0.1
  */
 public class Unproject{
+
+	private final Logger log = Logger.getLogger(this.getClass().getName());
 	
 	// True if near and far points calculated.
 	private static boolean m_bValid = false;

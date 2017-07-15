@@ -11,6 +11,7 @@ import processing.opengl.*;
 import processing.event.*;
 
 import java.util.*;
+import java.util.logging.*;
 
 /**
  *  PApplet graphic interface for Shine3 engine.
@@ -55,7 +56,7 @@ public class EngineInterface extends PApplet{
 	public void setup() {
 		frameRate(160);
 		surface.setResizable(true);
-		frame.setTitle("Shine 3");
+		surface.setTitle("Shine 3");
 		hint(PApplet.DISABLE_DEPTH_TEST);
 
 		textFont(loadFont("Raleway-Regular-18.vlw"));
@@ -177,7 +178,7 @@ public class EngineInterface extends PApplet{
 		int offset = 40;
 
 		stroke(Palette.RED);
-		for (Class<? extends Block> c : Shine3.engine.getAvailableBlocks()) {
+		for (Class<?> c : Shine3.engine.getAvailableBlocks()) {
 			fill(Palette.RED);
 			text(c.getSimpleName().toLowerCase(), 30, offset);
 			offset += 25;
@@ -188,7 +189,7 @@ public class EngineInterface extends PApplet{
 		
 		Map<Pair<Integer, Integer>, Block> map = Mapgen.getOrthoMap(blocks);
 
-		System.out.println("min: "+ Mapgen.level +" max: "+ Mapgen.maxLevel +" width: "+Mapgen.maxSpot);
+		//System.out.println("min: "+ Mapgen.level +" max: "+ Mapgen.maxLevel +" width: "+Mapgen.maxSpot);
 
 		stroke(Palette.RED);
 		rectMode(CENTER);

@@ -9,6 +9,7 @@ import java.net.URLClassLoader;
 import java.io.File;
 import java.lang.reflect.Modifier;
 import java.util.*;
+import java.util.logging.*;
 
 /**
  * 	Manage the loading of external jars.
@@ -18,6 +19,8 @@ import java.util.*;
  */
 
 public class Modules extends URLClassLoader{
+
+	private final Logger log = Logger.getLogger(this.getClass().getName());
 
 	public Modules(){
 		super(new URL[0]);
@@ -43,9 +46,9 @@ public class Modules extends URLClassLoader{
 		for(Class<?> b : subclasses){
 			if(Modifier.isFinal(b.getModifiers())){
 				availableSubclasses.add(b);	
-				System.out.print("found: "+b.getName()+" ("+c.getSimpleName()+")");
+				log.fine("found: "+b.getName()+" ("+c.getSimpleName()+")");
 				if(b.getClassLoader() != null)
-					System.out.println(" < "+b.getClassLoader().toString());			
+					log.fine(" < "+b.getClassLoader().toString());			
 			}
 		}
 
@@ -65,11 +68,12 @@ public class Modules extends URLClassLoader{
 			for (int i = 0; i < listOfFiles.length; i++) {
 				if (listOfFiles[i].isFile()) {
 					addURL(listOfFiles[i].toURI().toURL());
-					System.out.println("Added "+listOfFiles[i].toString()+" to classpath.");
+					log.info("Added "+listOfFiles[i].toString()+" to classpath.");
 				}
 			}
 		}catch (Exception e) {
-			e.printStackTrace();
+			// e.printStackTrace();
+			log.info("Failed to load "+folder);
 		}
 	}
 

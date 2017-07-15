@@ -3,12 +3,16 @@ package procsynth.shine3.papplet;
 import procsynth.shine3.utils.*;
 import procsynth.shine3.engine.*;
 import java.util.*;
+import java.util.logging.*;
 
 /**
 *	A class te generate different maps of the block tree.
 *	@see EngineInterface
 */
 class Mapgen{
+	
+	private final Logger log = Logger.getLogger(this.getClass().getName());
+	
 	private static Map<Pair<Integer, Integer>, Block> map = new HashMap();
 	private static Map<Integer, Integer> nextSpotOnLevel = new HashMap();
 	public static int maxSpot = 0;

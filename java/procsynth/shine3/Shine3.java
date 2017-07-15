@@ -8,6 +8,7 @@ import java.util.jar.Manifest;
 import java.util.jar.Attributes;
 import java.io.IOException;
 import java.security.Policy;
+import java.util.logging.*;
 
 import procsynth.shine3.engine.*;
 import procsynth.shine3.papplet.*;
@@ -30,8 +31,11 @@ public class Shine3{
 	/** Self reference of main class.*/
 	public static Shine3 S3;
 
-	/** Self reference of main class.*/
+	/** Module loader. */
 	public static Modules modules;
+
+	/** Application logger */
+	private static final Logger log = Logger.getLogger("S3");
 
 	/** The BlockEngine instance.*/
 	public static BlockEngine engine;
@@ -47,6 +51,10 @@ public class Shine3{
 	* @see #Shine3
 	*/
 	public static void main(String[] args) {
+		System.setProperty("java.util.logging.SimpleFormatter.format", 
+            "[%4$s] %1$tT %2$s - %5$s%6$s%n");
+		log.setLevel(Level.INFO);
+
 		Policy.setPolicy(new ModulesPermissions());
   		System.setSecurityManager(new SecurityManager());   
 
@@ -68,7 +76,7 @@ public class Shine3{
 	*/
 	private Shine3(){
 		VERSION = getVersion();
-		System.out.println("Shine3 "+ VERSION +" / procsynth");
+		System.out.println("\nShine3 "+ VERSION +" / procsynth");
 
 		engine = new BlockEngine();
 		papplet = new EngineInterface(engine);
@@ -94,7 +102,9 @@ public class Shine3{
 			Manifest manifest = new Manifest(url.openStream());
 			Attributes attr = manifest.getMainAttributes();
 			version = attr.getValue("Specification-Version");
-		} catch (IOException E) {}
+		} catch (IOException E) {
+			log.warning("Could'nt retrieve application version.");
+		}
 		return version;
 	}
 }

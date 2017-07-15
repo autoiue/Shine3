@@ -1,6 +1,7 @@
 // World.java
 
 package procsynth.shine3.engine.world;
+import java.util.logging.*;
 
 /**
  * Holds a particular state of the world
@@ -10,6 +11,7 @@ package procsynth.shine3.engine.world;
  */
 public class State{
 
+	private final Logger log = Logger.getLogger(this.getClass().getName());
 	
 	public State(){
 

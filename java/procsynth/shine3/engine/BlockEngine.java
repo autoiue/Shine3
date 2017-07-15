@@ -7,6 +7,7 @@ import procsynth.shine3.engine.world.*;
 import procsynth.shine3.Shine3;
 
 import java.util.*;
+import java.util.logging.*;
 
 /**
  *	
@@ -14,6 +15,8 @@ import java.util.*;
  *	@since  v0.0.1
  */
 public class BlockEngine extends Thread{
+
+	private final Logger log = Logger.getLogger(this.getClass().getName());
 
 	/**	List available blocks */
 	private List<Class<?>> availableBlocks = new ArrayList<>();
@@ -168,7 +171,7 @@ public class BlockEngine extends Thread{
 		}
 		Block b = (Block)blockClass.newInstance();
 		blocks.add(b);
-		System.out.println(b.getIdString());
+		log.fine(b.getIdString());
 	}
 }
 

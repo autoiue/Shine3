@@ -1,12 +1,16 @@
 // Pair.java
 
 package procsynth.shine3.utils;
+import java.util.logging.*;
 
 /**
 *	A class to associate two values.
 *	@see procsynth.shine3.papplet.EngineInterface
 */
 public final class Pair<A, B> {
+
+	private final Logger log = Logger.getLogger(this.getClass().getName());
+
 	private final A first;
 	private final B second;
 

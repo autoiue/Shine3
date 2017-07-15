@@ -2,18 +2,21 @@
 
 package procsynth.shine3;
 
+
 import java.security.*;
 import java.lang.ClassLoader;
+import java.util.logging.*;
 
 /**
- *  Sets permissions application wise
+ *  Sets permissions application wide
  *
  *  @author procsynth - Antoine Pintout
  *  @since  v0.0.1
  */
 
 public class ModulesPermissions extends Policy {
-	
+
+	private final Logger log = Logger.getLogger(this.getClass().getName());
 
 	/**
 	 * Called by the security manager if a module tries a restricted action
