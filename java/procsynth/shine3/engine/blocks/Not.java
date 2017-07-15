@@ -2,24 +2,23 @@
 
 package procsynth.shine3.engine.blocks;
 
-import procsynth.shine3.engine.*;
+import procsynth.shine3.engine.Block;
 
 /**
- *  An 'NOT' block.
+ * An 'NOT' block.
  *
- *	@author procsynth - Antoine Pintout
- *	@since  v0.0.1
+ * @author procsynth - Antoine Pintout
+ * @since v0.0.1
  *
  */
-public final class Not extends Block{
-	public Not(){
+public final class Not extends Block {
+	public Not() {
 		this.displayName = "not";
 		newInput("A", false);
 		newOutput("NOT A", false);
 	}
 
-	public void tick(){
-		set("NOT A", !(Boolean)get("A"));
+	public void tick() {
+		set("NOT A", !(Boolean) get("A"));
 	}
 }
-

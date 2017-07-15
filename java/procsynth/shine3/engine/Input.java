@@ -1,26 +1,26 @@
 // Input.java
 
 package procsynth.shine3.engine;
-import java.util.logging.*;
+
+import java.util.logging.Logger;
 
 /**
- * 	An input is a part of a block that is connected to another block output.
- * 	It describe to which block it is connected, which data type is exchanged, 
- *	and what's the value of the data.
+ * An input is a part of a block that is connected to another block output. It
+ * describe to which block it is connected, which data type is exchanged, and
+ * what's the value of the data.
  *
- *	Each block keeps a list of which of its inputs are connected to which other block's outputs.
+ * Each block keeps a list of which of its inputs are connected to which other
+ * block's outputs.
  *
- *	@author procsynth - Antoine Pintout
- *	@since  v0.0.1
+ * @author procsynth - Antoine Pintout
+ * @since v0.0.1
  *
- *  @see BlockEngine
- *  @see Block
+ * @see BlockEngine
+ * @see Block
  */
-public class Input<T>{
+public class Input<T> {
 
-	
 	private final Logger log = Logger.getLogger(this.getClass().getName());
-	
 
 	/** The source output. */
 	private Output<T> source;
@@ -31,50 +31,57 @@ public class Input<T>{
 	private final T defaultValue;
 	/** The display name of the input. */
 	private String name;
-	/** @return the display name of the input. */
-	private String getName(){return name;}
 
-	public Input(String name, T defaultValue){
+	/** @return the display name of the input. */
+	private String getName() {
+		return name;
+	}
+
+	public Input(String name, T defaultValue) {
 		this.name = name;
 		this.defaultValue = defaultValue;
 	}
 
 	/** Retrieve the last value from the source block. */
-	public void update(){
-		if(source != null){
-			value = (T)source.value();
+	public void update() {
+		if (source != null) {
+			value = (T) source.value();
 		}
 	}
 
 	/**
-	*	Get the input value.
-	*	@return the value of the source output
-	*/
-	public T value(){
-		if(value == null){
+	 * Get the input value.
+	 * 
+	 * @return the value of the source output
+	 */
+	public T value() {
+		if (value == null) {
 			return defaultValue;
-		}else{
+		} else {
 			return value;
 		}
 	}
 
 	/**
-	*	Get the sourceBlock
-	*	@return the block to which the source belongs
-	*/
-	public Block getSourceBlock(){
-		if(source == null){
+	 * Get the sourceBlock
+	 * 
+	 * @return the block to which the source belongs
+	 */
+	public Block getSourceBlock() {
+		if (source == null) {
 			return null;
-		}else{
+		} else {
 			return source.getParent();
 		}
 	}
 
 	/**
-	*	Set the source
-	*	@param source the output to link to this input
-	*/
-	public void setSource(Output<T> source){
+	 * Set the source
+	 * 
+	 * @param source
+	 *            the output to link to this input
+	 */
+	public void setSource(Output<T> source) {
 		this.source = source;
 	}
 

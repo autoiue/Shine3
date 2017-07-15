@@ -2,18 +2,17 @@
 
 package procsynth.shine3.engine.blocks;
 
-import procsynth.shine3.engine.*;
+import procsynth.shine3.engine.Block;
 
 /**
- *  A dummy direct final block.
+ * A dummy direct final block.
  *
- *	@author procsynth - Antoine Pintout
- *	@since  v0.0.1
+ * @author procsynth - Antoine Pintout
+ * @since v0.0.1
  *
  */
-public final class DummyFinal extends Block{
-	public DummyFinal(){
+public final class DummyFinal extends Block {
+	public DummyFinal() {
 		this.displayName = "final";
 	}
 }
-

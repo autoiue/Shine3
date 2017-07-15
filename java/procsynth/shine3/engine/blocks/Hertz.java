@@ -2,23 +2,22 @@
 
 package procsynth.shine3.engine.blocks;
 
-import procsynth.shine3.engine.*;
+import procsynth.shine3.engine.Block;
 
 /**
- *	A block that is swhitching its output to 1 or 0 every second.
+ * A block that is swhitching its output to 1 or 0 every second.
  *
- *	@author procsynth - Antoine Pintout
- *	@since  v0.0.1
+ * @author procsynth - Antoine Pintout
+ * @since v0.0.1
  *
  */
-public final class Hertz extends Block{
-	public Hertz(){
+public final class Hertz extends Block {
+	public Hertz() {
 		this.displayName = "hertz";
 		newOutput("hertz", false);
 	}
 
-	public void tick(){
+	public void tick() {
 		set("hertz", System.currentTimeMillis() % 2000 >= 1000);
 	}
 }
-
