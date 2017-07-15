@@ -8,3 +8,7 @@
 # sublime
 *.sublime-*
 
+# eclipse
+.project
+bin
+.classpath
