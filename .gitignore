@@ -8,7 +8,10 @@
 # sublime
 *.sublime-*
 
-# eclipse
+# eclipse / IDEs
 .project
 bin
-.classpath
+.classpatha
+*.iml
+/out/
+.idea
