@@ -12,8 +12,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import procsynth.shine3.engine.Block;
-import procsynth.shine3.engine.BlockEngine;
-import procsynth.shine3.papplet.EngineInterface;
+import procsynth.shine3.engine.Engine;
+import procsynth.shine3.papplet.UI;
 
 /**
  * Main class for Shine3
@@ -28,7 +28,7 @@ public class Shine3 {
 	 *
 	 * @see #getVersion
 	 */
-	public static String VERSION = "unknow";
+	public static String VERSION = "unknown";
 
 	/** Self reference of main class. */
 	public static Shine3 S3;
@@ -40,13 +40,15 @@ public class Shine3 {
 	private static final Logger log = Logger.getLogger("S3");
 
 	/** The BlockEngine instance. */
-	public static BlockEngine engine;
+	public static Engine engine;
 
 	/** The EngineInterface instance. */
-	public static EngineInterface papplet;
+	public static UI ui;
+
 
 	/**
 	 * Initialize the main object.
+	 * Initialize modules
 	 *
 	 * @param args
 	 *            the command line arguments passed at `java`
@@ -62,30 +64,31 @@ public class Shine3 {
 
 		modules = new Modules();
 		modules.addPath(System.getProperty("user.home") + "/.shine3/modules/");
-		S3 = new Shine3();
-		S3.en
+		S3 = new Shine3(args);
 	}
 
 	/**
 	 * Initialize the application objects. Shine3 is composed by three main parts :
-	 * The {@link BlockEngine} is the heart of Shine3, it is composed by multiple
+	 * The {@link Engine} is the heart of Shine3, it is composed by multiple
 	 * {@link Block} objects with inputs and outputs that we can wire the way we
 	 * want. The specific blocks used in Shine3 are in the package
 	 * <code>procsynth.shine3.shine</code> it is fed in the engine after the
-	 * instanciation using usig autodiscoveryb. The {@link EngineInterface} is a GUI
+	 * instantiation using auto discovery. The {@link Engine} is a GUI
 	 * powered by Processing which manipulates the state of the BlockEngine and the
 	 * blocks.
 	 *
-	 * @see BlockEngine
+	 * @see Engine
 	 * @see Block
-	 * @see EngineInterface
+	 * @see UI
+	 *
+	 * @param args command line arguments passed at `java`
 	 */
-	private Shine3() {
+	private Shine3(String[] args) {
 		VERSION = getVersion();
 		System.out.println("\nShine3 " + VERSION + " / procsynth");
 
-		engine = new BlockEngine();
-		papplet = new EngineInterface(engine);
+		engine = new Engine(args);
+		ui = new UI(args);
 	}
 
 	/**
@@ -97,7 +100,7 @@ public class Shine3 {
 	 * @return the version string
 	 */
 	private String getVersion() {
-		String version = "unknow";
+		String version = "unknown";
 		// Load the jar resources
 		URLClassLoader cl = (URLClassLoader) getClass().getClassLoader();
 		// In the manifest file, retrieve the field that contains the version string

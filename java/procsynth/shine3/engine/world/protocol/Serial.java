@@ -9,4 +9,9 @@ public final class Serial extends Protocol {
 	public Serial() {
 
 	}
+
+	@Override
+	public void tick() {
+
+	}
 }

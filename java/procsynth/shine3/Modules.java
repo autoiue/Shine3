@@ -48,7 +48,7 @@ public class Modules extends URLClassLoader {
 		for (Class<?> b : subclasses) {
 			if (Modifier.isFinal(b.getModifiers())) {
 				availableSubclasses.add(b);
-				log.fine("found: " + b.getName() + " (" + c.getSimpleName() + ")");
+				log.info("found: " + b.getName() + " (" + c.getSimpleName() + ")");
 				if (b.getClassLoader() != null)
 					log.fine(" < " + b.getClassLoader().toString());
 			}

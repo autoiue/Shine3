@@ -9,4 +9,9 @@ public final class CustomSerial extends Resource {
 	public CustomSerial() {
 
 	}
+
+	@Override
+	public void tick() {
+
+	}
 }

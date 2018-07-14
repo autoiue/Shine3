@@ -9,7 +9,7 @@ import processing.core.PApplet;
 import processing.core.PVector;
 import procsynth.shine3.Shine3;
 import procsynth.shine3.engine.Block;
-import procsynth.shine3.engine.BlockEngine;
+import procsynth.shine3.engine.Engine;
 import procsynth.shine3.engine.Input;
 import procsynth.shine3.engine.Output;
 import procsynth.shine3.utils.Pair;
@@ -22,73 +22,81 @@ import procsynth.shine3.utils.Pair;
  * @author procsynth - Antoine Pintout
  * @since v0.0.1
  */
-public class EngineInterface extends PApplet {
+public class UI extends PApplet {
 
 	/** Stores the arguments passed the Processing sketch */
 	private static final String[] PAPPLET_ARGS = new String[] { "" };
 
 	/** The reference of the BlockEngine that is interfaced. */
-	private BlockEngine engine;
+	private Engine engine;
+	/** The root drawable */
+	private Drawable root;
 
 	/**
 	 * This creates a PApplet sketch that will render a representation of the
-	 * BlockEngine.
+	 * Engine.
 	 *
-	 * @param engine
-	 *            the BlockEngine to be interfaced
-	 *
-	 * @see BlockEngine
+	 * @see Engine
 	 * 
 	 */
-	public EngineInterface(BlockEngine engine) {
-		this.engine = engine;
-		PApplet.runSketch(PAPPLET_ARGS, this);
+	public UI(String[] args) {
+		PApplet.runSketch(concat(args, PAPPLET_ARGS), this);
 
-		// generate a map for the frst time
+		// generate a map for the first time
 		List<Block> blocks = Shine3.engine.getBlocks();
 		Map<Pair<Integer, Integer>, Block> map = Mapgen.getOrthoMap(blocks);
 	}
 
 	/** Settings of the PApplet. */
+	@Override
 	public void settings() {
 		size(1920, 1080, PApplet.P3D);
-		smooth(8);
+		pixelDensity(displayDensity());
+		smooth(4);
 	}
 
 	/** Setup of the PApplet. Set renderer properties. */
+	@Override
 	public void setup() {
 		frameRate(160);
 		surface.setResizable(true);
 		surface.setTitle("Shine 3");
 		hint(PApplet.DISABLE_DEPTH_TEST);
 
-		textFont(loadFont("Raleway-Regular-18.vlw"));
+		if(pixelDensity == 2){
+			textFont(loadFont("Raleway-Regular-36.vlw"));
+		}else{
+			textFont(loadFont("Raleway-Regular-18.vlw"));
+		}
+
+		root = new RootDrawable(g);
 	}
 
 	/**
 	 * Main loop of the PApplet.
 	 */
+	@Override
 	public void draw() {
 		background(0x00, 0x10, 0x21);
 		pushMatrix();
 
 		List<Block> blocks = Shine3.engine.getBlocks();
 
-		// setup 3D camera
+		// // setup 3D camera
 
 		// tweak frustrum near and far plane to avoid clipping;
 		ortho(-width / 2, width / 2, -height / 2, height / 2, -height, 2 * height);
 		camera(Math.min(width, height) / 1.8f, Math.min(width, height) / 2.0f,
-				(Math.min(width, height) / 2.0f) / tan(PI * 28.0f / 180.0f), 0, 0, 0, 0, 0, -1);
+			(Math.min(width, height) / 2.0f) / tan(PI * 28.0f / 180.0f), 0, 0, 0, 0, 0, -1);
 
 		Unproject.captureViewMatrix(this);
 		PVector mouse = Unproject.unproject(mouseX, mouseY, 0);
 
-		// todo draw block tree
+		//
 
-		drawCursor(mouse);
 		draw3DMap(blocks, mouse);
 
+		drawCursor(mouse);
 		popMatrix();
 
 		drawStatus();
@@ -115,11 +123,18 @@ public class EngineInterface extends PApplet {
 			} else {
 				stroke(Palette.ORANGE);
 			}
-			translate(coords.A() * -170, coords.B() * 220, -15);
-			box(120, 170, 30);
-			translate(0, 0, 15);
+			translate(coords.A() * -170, coords.B() * 220, 15);
+			rectMode(CENTER);
+			rect(0, 0, 120, 170);
+			translate(0, 0, -30);
+			stroke(Palette.ORANGE_DARK);
+			rect(0, 0, 120, 170);
+			line(-120/2, -170/2, 0, -120/2, -170/2, 30);
+			line(-120/2, 170/2, 0, -120/2, 170/2, 30);
+			line(120/2, -170/2, 0, 120/2, -170/2, 30);
+			line(120/2, 170/2, 0, 120/2, 170/2, 30);
 			rotateZ(-HALF_PI);
-			translate(-170 / 2, -120 / 2);
+			translate(-170 / 2, -120 / 2, 30);
 			text(b.getDisplayName(), 0, 0);
 
 			int offsetOut = 170 - 20;
@@ -162,16 +177,16 @@ public class EngineInterface extends PApplet {
 		translate(mouse.x, mouse.y);
 
 		stroke(Palette.RED);
-		line(0, 0, 0, 100, 0, 0);
+		line(0, 0, 0, -20, 0, 0);
 		stroke(Palette.GREEN);
-		line(0, 0, 0, 0, -100, 0);
+		line(0, 0, 0, 0, -20, 0);
 		stroke(Palette.BLUE);
-		line(0, 0, 0, 0, 0, 100);
+		line(0, 0, 0, 0, 0, 20);
 
 		// rotateZ(PI);
 		fill(Palette.GREEN);
 		textAlign(PApplet.LEFT, PApplet.BOTTOM);
-		text(mouseX + ";" + mouseY + ";", 10, -10);
+	//	text(mouseX + ";" + mouseY + ";", 10, -10);
 		popMatrix();
 	}
 

@@ -5,7 +5,7 @@ package procsynth.shine3.engine;
 import java.util.logging.Logger;
 
 /**
- * A BlockFactory make blocks. It is use when a system cannont be represented by
+ * A BlockFactory make blocks. It is use when a system cannot be represented by
  * only one Block, for example, the MIDI protocol can be handled in the factory
  * and each block from the factory will represent a different bus.
  *
@@ -13,11 +13,9 @@ import java.util.logging.Logger;
  * @since v0.0.1
  *
  * @see Block
- * @see BlockEngine
+ * @see Engine
  */
 public abstract class BlockFactory {
-
-	private final Logger log = Logger.getLogger(this.getClass().getName());
 
 	public BlockFactory() {
 	}

@@ -1,6 +1,9 @@
-// Reource.java
+// Resource.java
 
 package procsynth.shine3.engine.world.protocol.resource;
+
+import procsynth.shine3.engine.Input;
+import procsynth.shine3.engine.Output;
 
 import java.util.logging.Logger;
 
@@ -9,9 +12,11 @@ import java.util.logging.Logger;
  */
 public abstract class Resource {
 
+	private Output[] readable;
+	private Input[] writable;
+
 	private final Logger log = Logger.getLogger(this.getClass().getName());
 
-	public Resource() {
+	public abstract void tick();
 
-	}
 }

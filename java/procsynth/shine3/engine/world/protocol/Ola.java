@@ -9,4 +9,9 @@ public final class Ola extends Protocol {
 	public Ola() {
 
 	}
+
+	@Override
+	public void tick() {
+
+	}
 }

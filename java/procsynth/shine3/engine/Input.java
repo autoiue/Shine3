@@ -2,6 +2,9 @@
 
 package procsynth.shine3.engine;
 
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -15,7 +18,7 @@ import java.util.logging.Logger;
  * @author procsynth - Antoine Pintout
  * @since v0.0.1
  *
- * @see BlockEngine
+ * @see Engine
  * @see Block
  */
 public class Input<T> {
@@ -37,6 +40,9 @@ public class Input<T> {
 		return name;
 	}
 
+	/** Internal pool holding all available inputs */
+	private static Map<String, Input<?>> inputPool = new HashMap<>();
+
 	public Input(String name, T defaultValue) {
 		this.name = name;
 		this.defaultValue = defaultValue;
@@ -45,7 +51,7 @@ public class Input<T> {
 	/** Retrieve the last value from the source block. */
 	public void update() {
 		if (source != null) {
-			value = (T) source.value();
+			value = source.value();
 		}
 	}
 

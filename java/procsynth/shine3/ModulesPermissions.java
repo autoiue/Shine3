@@ -29,7 +29,7 @@ public class ModulesPermissions extends Policy {
 	 */
 	@Override
 	public PermissionCollection getPermissions(ProtectionDomain domain) {
-		System.out.println("Got permissions request, is application: " + isApplication(domain));
+		log.finer("Got permissions request, is application: " + isApplication(domain));
 		if (isApplication(domain)) {
 			return applicationPermissions();
 		} else {
@@ -46,7 +46,7 @@ public class ModulesPermissions extends Policy {
 	 * @return true if the code belongs to the application
 	 */
 	private boolean isApplication(ProtectionDomain domain) {
-		System.out.println(domain.getClassLoader() + " vs " + ClassLoader.getSystemClassLoader());
+		log.finest(domain.getClassLoader() + " vs " + ClassLoader.getSystemClassLoader());
 		return domain.getClassLoader() == ClassLoader.getSystemClassLoader();
 	}
 

@@ -2,6 +2,8 @@
 
 package procsynth.shine3.engine;
 
+import java.util.HashMap;
+import java.util.Map;
 import java.util.logging.Logger;
 
 /**
@@ -11,7 +13,7 @@ import java.util.logging.Logger;
  * @author procsynth - Antoine Pintout
  * @since v0.0.1
  *
- * @see BlockEngine
+ * @see Engine
  * @see Block
  */
 public class Output<T> {
@@ -29,12 +31,22 @@ public class Output<T> {
 	private String name;
 
 	/** @return the display name of the output. */
-	private String getName() {
+	public String getName() {
 		return name;
 	}
 
+
+	/** Internal pool holding all available outputs */
+	private static Map<String, Output<?>> outputPool = new HashMap<>();
+
 	public Output(Block parent, String name, T defaultValue) {
 		this.parent = parent;
+		this.name = name;
+		this.defaultValue = defaultValue;
+	}
+
+	public Output(String name, T defaultValue) {
+		this.parent = null;
 		this.name = name;
 		this.defaultValue = defaultValue;
 	}

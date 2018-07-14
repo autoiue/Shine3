@@ -7,7 +7,7 @@ import java.util.logging.Logger;
 /**
  * A class to associate two values.
  * 
- * @see procsynth.shine3.papplet.EngineInterface
+ * @see procsynth.shine3.papplet.UI
  */
 public final class Pair<A, B> {
 

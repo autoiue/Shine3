@@ -5,7 +5,7 @@ package procsynth.shine3.engine.blocks;
 import procsynth.shine3.engine.Block;
 
 /**
- * A block that is swhitching its output to 1 or 0 every second.
+ * A block that is switching its output to 1 or 0 every second.
  *
  * @author procsynth - Antoine Pintout
  * @since v0.0.1

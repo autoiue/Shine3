@@ -9,4 +9,9 @@ public final class Midi extends Protocol {
 	public Midi() {
 
 	}
+
+	@Override
+	public void tick() {
+
+	}
 }

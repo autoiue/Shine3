@@ -12,7 +12,7 @@ import java.util.logging.Logger;
  * @author procsynth - Antoine Pintout
  * @since v0.0.1
  *
- * @see EngineInterface
+ * @see UI
  */
 public abstract class View {
 

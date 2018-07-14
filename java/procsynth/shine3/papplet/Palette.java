@@ -13,4 +13,5 @@ public class Palette {
 	public static final int BLACK = 0xFF001021;
 	public static final int PURPLE = 0xFF001021;
 	public static final int ORANGE = 0xFFF34213;
+	public static final int ORANGE_DARK = 0xff481305;
 }

@@ -49,7 +49,7 @@ import java.util.logging.Logger;
  * @author procsynth - Antoine Pintout
  * @since v0.0.1
  *
- * @see BlockEngine
+ * @see Engine
  * @see BlockFactory
  */
 public class Block {
@@ -57,40 +57,17 @@ public class Block {
 	private final Logger log = Logger.getLogger(this.getClass().getName());
 
 	/**
-	 * A unique string that will be used to reconstruct the block objet when needed.
+	 * A unique string that will be used to reconstruct the block object when needed.
 	 *
 	 * @see #generateBlockIdString
 	 */
 	private final String idString;
-
-	/** @return the idString of the block instance. */
-	public String getIdString() {
-		return idString;
-	}
-
-	/** List the inputs of the block. */
-	private Map<String, Input> inputs = new LinkedHashMap();
-
-	/** @return the list of inputs of this block */
-	public Map<String, Input> getInputs() {
-		return inputs;
-	}
-
-	/** List the outputs of the block. */
-	private Map<String, Output> outputs = new LinkedHashMap();
-
-	/** @return the list of inputs of this block */
-	public Map<String, Output> getOutputs() {
-		return outputs;
-	}
-
 	/** the name that will be displayed */
 	protected String displayName;
-
-	/** @return the display name of the block */
-	public String getDisplayName() {
-		return displayName;
-	}
+	/** List the inputs of the block. */
+	private Map<String, Input> inputs = new LinkedHashMap();
+	/** List the outputs of the block. */
+	private Map<String, Output> outputs = new LinkedHashMap();
 
 	/** Used to construct a totally new Block instance */
 	public Block() {
@@ -108,6 +85,26 @@ public class Block {
 		this.idString = idString;
 	}
 
+	/** @return the idString of the block instance. */
+	public String getIdString() {
+		return idString;
+	}
+
+	/** @return the list of inputs of this block */
+	public Map<String, Input> getInputs() {
+		return inputs;
+	}
+
+	/** @return the list of inputs of this block */
+	public Map<String, Output> getOutputs() {
+		return outputs;
+	}
+
+	/** @return the display name of the block */
+	public String getDisplayName() {
+		return displayName;
+	}
+
 	/**
 	 * This method is called before each tick by the engine, it refresh all the
 	 * inputs.
@@ -120,17 +117,17 @@ public class Block {
 
 	/**
 	 * This method is called each tick by the engine. <br>
-	 * This method is to be overriden to implement specific block functionnality.
+	 * This method is to be overridden to implement specific block functionality.
 	 */
 	public void tick() {
 	}
 
 	/**
-	 * Generate a unique string that will be used to reconstruct the block objet
+	 * Generate a unique string that will be used to reconstruct the block object
 	 * when needed.
 	 * 
 	 * It's structure is:
-	 * <code>{fully qualified classname of block class of blockFactory class}:{uniqueid string}</code>
+	 * <code>{fully qualified classname of block class or blockFactory class}:{uniqueid string}</code>
 	 *
 	 * @return the id string
 	 */

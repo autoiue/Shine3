@@ -9,4 +9,9 @@ public final class Artnet extends Protocol {
 	public Artnet() {
 
 	}
+
+	@Override
+	public void tick() {
+
+	}
 }

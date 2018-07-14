@@ -11,9 +11,9 @@ import java.util.logging.Logger;
  */
 public abstract class Protocol {
 
-	private final Logger log = Logger.getLogger(this.getClass().getName());
+	protected final Logger log = Logger.getLogger(this.getClass().getName());
 
-	public Protocol() {
+	public Protocol(){}
+	public abstract void tick();
 
-	}
 }

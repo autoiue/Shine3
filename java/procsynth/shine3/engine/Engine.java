@@ -1,4 +1,4 @@
-// BlockEngine.java
+// Engine.java
 
 package procsynth.shine3.engine;
 
@@ -17,7 +17,7 @@ import procsynth.shine3.engine.world.World;
  * @author procsynth - Antoine Pintout
  * @since v0.0.1
  */
-public class BlockEngine extends Thread {
+public class Engine extends Thread {
 
 	private final Logger log = Logger.getLogger(this.getClass().getName());
 
@@ -26,22 +26,22 @@ public class BlockEngine extends Thread {
 
 	/** @return available blocks */
 	public List<Class<?>> getAvailableBlocks() {
-		return new ArrayList(availableBlocks);
+		return new ArrayList<>(availableBlocks);
 	}
 
 	/** List available factories */
 	private List<Class<?>> availableFactories = new ArrayList<>();
 
 	/** Stores all blocks currently in the engine */
-	private List<Block> blocks = new ArrayList();
+	private final List<Block> blocks = new ArrayList<>();
 
 	/** @return the block tree */
 	public List<Block> getBlocks() {
-		return new ArrayList(blocks);
+		return new ArrayList<>(blocks);
 	}
 
 	/** Stores all blocks resolved block for the current tick */
-	private List<Block> resolved = new ArrayList();
+	private List<Block> resolved = new ArrayList<>();
 
 	/** Stores number of ticks since start */
 	private long ticks = 0L;
@@ -68,15 +68,17 @@ public class BlockEngine extends Thread {
 	 */
 	private long targetPeriod = (long) (1000000000L / 42f); // target is 42 tps
 
-	/** Instanciate a BlockEngine and start the engine thread. */
-	public BlockEngine() {
+	public final World world;
+
+	/** Instantiate a BlockEngine and start the engine thread. */
+	public Engine(String[] args) {
 
 		availableBlocks = Shine3.modules.getClasses(Block.class);
 		availableFactories = Shine3.modules.getClasses(BlockFactory.class);
 
+		world = new World();
+
 		this.start();
-		new World();
-		Shine3.
 
 		// A test block
 		try {
@@ -97,6 +99,7 @@ public class BlockEngine extends Thread {
 	 * 
 	 * @see #setTickRate
 	 */
+	@Override
 	public void run() {
 
 		long tickRateLastNanos = 0L;
@@ -134,8 +137,10 @@ public class BlockEngine extends Thread {
 	/** Engine main logic */
 	private void tick() {
 
+		world.tick();
+
 		// clear resolved block list:
-		resolved = new ArrayList();
+		resolved = new ArrayList<>();
 		// resolve block tree
 		for (Block b : blocks) {
 			// if block not already resolve
@@ -186,21 +191,18 @@ public class BlockEngine extends Thread {
 	 * 
 	 * @param blockClass
 	 *            the class to create the object from
-	 * 
-	 * @throws EngineExceptions.UnknowClass
-	 *             if the class definition is unknown
-	 * @throws InstantiationException
-	 *             if instanciation goes wrong.
-	 * @throws IllegalAccessException
-	 *             if instanciation goes wrong.
+	 *
 	 */
-	public void addBlock(Class<?> blockClass)
-			throws EngineExceptions.UnknowClass, InstantiationException, IllegalAccessException {
-		if (availableBlocks.indexOf(blockClass) == -1) {
-			throw new EngineExceptions.UnknowClass();
+	public void addBlock(Class<?> blockClass){
+		if (availableBlocks.indexOf(blockClass) != -1) {
+			Block b = null;
+			try {
+				b = (Block) blockClass.newInstance();
+				blocks.add(b);
+				log.fine(b.getIdString());
+			} catch (InstantiationException | IllegalAccessException e) {
+				log.severe(e.getMessage());
+			}
 		}
-		Block b = (Block) blockClass.newInstance();
-		blocks.add(b);
-		log.fine(b.getIdString());
 	}
 }

@@ -157,9 +157,9 @@ public class Unproject {
 		m_bValid = true; // Have to do both in order to reset PVector on error.
 
 		// m_aiViewport[3] == p.height
-		if (!gluUnProject((float) x, m_aiViewport[3] - (float) y, 0.0f, ptStartPos))
+		if (!gluUnProject(x, m_aiViewport[3] - y, 0.0f, ptStartPos))
 			m_bValid = false;
-		if (!gluUnProject((float) x, m_aiViewport[3] - (float) y, 1.0f, ptEndPos))
+		if (!gluUnProject(x, m_aiViewport[3] - y, 1.0f, ptEndPos))
 			m_bValid = false;
 		return m_bValid;
 	}

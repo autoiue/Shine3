@@ -12,7 +12,7 @@ import procsynth.shine3.utils.Pair;
 /**
  * A class te generate different maps of the block tree.
  * 
- * @see EngineInterface
+ * @see UI
  */
 class Mapgen {
 
