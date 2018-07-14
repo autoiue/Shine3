@@ -22,7 +22,7 @@ You have two possibilities to implement a block :
 #### Java
 
 You write a Java class that extends the default Block class.
-You can find the documentation here : [pr0csynth.github.io/Shine3/docs](https://pr0csynth.github.io/Shine3/docs).
+You can find the documentation here : [procsynth.github.io/Shine3/docs](https://procsynth.github.io/Shine3/docs).
 
 #### Javascript
 

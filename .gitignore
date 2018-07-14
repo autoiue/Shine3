@@ -11,7 +11,7 @@
 # eclipse / IDEs
 .project
 bin
-.classpatha
+.classpath
 *.iml
 /out/
 .idea
